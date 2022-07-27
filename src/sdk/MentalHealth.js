@@ -2,7 +2,7 @@ export class MentalHealthSDK {
 	constructor(config) {
 		this.config = {
             study_id:"default",
-            refresh_timeout:1000,
+            refresh_timeout:10*60*1000,
             surveys:[],
             suggestions:[
                 {
@@ -16,29 +16,38 @@ export class MentalHealthSDK {
 		this._init_sensors()
 	}
     _init_sensors(){
+        this._data_loop();
         setInterval(()=>{this._data_loop()},this.config.refresh_timeout)
+        let gyroscope = new window.Gyroscope({frequency: 1000/this.config.refresh_timeout});
+
+        gyroscope.addEventListener('reading', (e) => {
+            this._save_data("gyroscope",{
+                x:gyroscope.x,
+                y:gyroscope.y,
+                z:gyroscope.z
+            })
+        });
+        gyroscope.start();
 	}
     _data_loop(){
         var self = this;
-        // navigator.getBattery().then((data) => {
-        //     self._save_data("battery",{
-        //         charging:data.charging,
-        //         batterylife:data.dischargingTime,
-        //         level:data.level
-        //     })
-        // })
-        // navigator.geolocation.getCurrentPosition((data) => {
-        //     self._save_data("gps",{
-        //         "latitude":data.coords.latitude,
-        //         "longitude":data.coords.longitude,
-        //         "altitude":data.coords.altitude,
-        //         "accuracy":data.coords.accuracy
-        //     })
-        // })
-        navigator.geolocation.getCurrentPosition((data) => {
-            console.log(data)
-            
+        navigator.getBattery().then((data) => {
+            self._save_data("battery",{
+                charging:data.charging,
+                batterylife:data.dischargingTime,
+                level:data.level
+            })
         })
+        navigator.geolocation.getCurrentPosition((data) => {
+            console.log(data);
+            self._save_data("gps",{
+                "latitude":data.coords.latitude,
+                "longitude":data.coords.longitude,
+                "altitude":data.coords.altitude,
+                "accuracy":data.coords.accuracy
+            })
+        })
+
     }
     _save_database(){
         localStorage.setItem("mha_raw", JSON.stringify(this.datasrc))

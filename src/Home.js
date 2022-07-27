@@ -54,7 +54,7 @@ export default function Home() {
       <LinearProgressWithLabel value={30} />
       <LinearProgressWithLabel value={60} />
       
-      <CardActions alignItems="center">
+      <CardActions>
         <Button variant="contained">Your Charts</Button>
         <Button variant="contained">Your Data</Button>
       </CardActions>
@@ -106,13 +106,14 @@ export default function Home() {
     <Card sx={{ m:2, maxWidth: 345, textAlign:"center" }}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Survey Name Mental Health
+          Mental Health Tip:
+        </Typography>
+        <Typography gutterBottom variant="h5" component="div">
+          Did you know? You are twice as likely to experience depression if you get less than 8 hours of sleep every day.
         </Typography>
       </CardContent>
 
-      <CardActions>
-        <Button variant="contained">😔</Button><Button variant="contained">😐</Button><Button variant="contained">😊</Button>
-      </CardActions>
+
     </Card>
 
     <Card sx={{ m:2, maxWidth: 345, textAlign:"center" }}>
