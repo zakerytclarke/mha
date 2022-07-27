@@ -7,6 +7,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 
+import { LinearProgressWithLabel } from "./components/LinearProgressWithLabel.js"
+
 import './Home.css';
 
 import logo from "./assets/penguin_waving.gif"
@@ -17,7 +19,7 @@ export default function Home() {
       <CardMedia
         component="img"
         alt="penguin waving"
-        height="300"
+        height="100"
         image={logo}
       />
       <CardContent>
@@ -28,6 +30,10 @@ export default function Home() {
           How are you feeling today?
         </Typography>
       </CardContent>
+      <LinearProgressWithLabel value={42} />
+      <LinearProgressWithLabel value={30} />
+      <LinearProgressWithLabel value={60} />
+      
       <CardActions>
         <Button variant="contained">😔</Button><Button variant="contained">😐</Button><Button variant="contained">😊</Button>
       </CardActions>
