@@ -50,10 +50,14 @@ const cardStyle = {
   m:2, 
   p:1,
   maxWidth: mW,
+  color: "#fff",
+  color: "rgba(255,255,255,0.8)",
+  textShadow:"1px 1px #ccc",
   backgroundColor:"#ffffff55",
   backdropFilter: "blur(50px)",
   border: "2px solid rgba(255, 255, 255, 0.1)",
-  boxShadow: "0 0 80px rgba(0, 0, 0, 0.2)"
+  boxShadow: "0 0 80px rgba(0, 0, 0, 0.2)",
+  borderRadius:"2vmin"
 }
 
 export default function Home() {
