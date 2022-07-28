@@ -44,11 +44,25 @@ function download(filename, text) {
 
   document.body.removeChild(element);
 }
+const mW = 400;
+
+const cardStyle = { 
+  m:2, 
+  p:1,
+  maxWidth: mW,
+  backgroundColor:"#ffffff55",
+  backdropFilter: "blur(50px)",
+  border: "2px solid rgba(255, 255, 255, 0.1)",
+  boxShadow: "0 0 80px rgba(0, 0, 0, 0.2)"
+}
 
 export default function Home() {
   return (
     <div>
-      <Card sx={{ m:2, maxWidth: 500 }} >
+      <Card sx={cardStyle}>
+      <Typography gutterBottom variant="h4" component="div">
+          Penguin Mental Health
+      </Typography>
       <CardMedia
         component="img"
         alt="penguin waving"
@@ -56,9 +70,7 @@ export default function Home() {
         image={logo}
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Penguin Mental Health
-        </Typography>
+
 
         <Typography gutterBottom variant="p" component="div">
           Mental Health Stats
@@ -83,7 +95,7 @@ export default function Home() {
         <Button variant="contained">Your Data</Button>
       </CardActions>
     </Card>
-    <Card sx={{ m:2, maxWidth: 345, textAlign:"center" }}>
+    <Card sx={cardStyle}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           Survey Name Mental Health
@@ -94,40 +106,8 @@ export default function Home() {
         <Button variant="contained">😔</Button><Button variant="contained">😐</Button><Button variant="contained">😊</Button>
       </CardActions>
     </Card>
-    <Card sx={{ m:2, maxWidth: 345, textAlign:"center" }}>
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Survey Name Mental Health
-        </Typography>
-      </CardContent>
-
-      <CardActions>
-        <Button variant="contained">😔</Button><Button variant="contained">😐</Button><Button variant="contained">😊</Button>
-      </CardActions>
-    </Card>
-    <Card sx={{ m:2, maxWidth: 345, textAlign:"center" }}>
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Survey Name Mental Health
-        </Typography>
-      </CardContent>
-
-      <CardActions>
-        <Button variant="contained">😔</Button><Button variant="contained">😐</Button><Button variant="contained">😊</Button>
-      </CardActions>
-    </Card>
-    <Card sx={{ m:2, maxWidth: 345, textAlign:"center" }}>
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Survey Name Mental Health
-        </Typography>
-      </CardContent>
-
-      <CardActions>
-        <Button variant="contained">😔</Button><Button variant="contained">😐</Button><Button variant="contained">😊</Button>
-      </CardActions>
-    </Card>
-    <Card sx={{ m:2, maxWidth: 345, textAlign:"center" }}>
+    
+    <Card  sx={cardStyle}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           Mental Health Tip:
@@ -140,7 +120,7 @@ export default function Home() {
 
     </Card>
 
-    <Card sx={{ m:2, maxWidth: 345, textAlign:"center" }}>
+    <Card  sx={cardStyle}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           Sleep Schedule Name Mental Health
@@ -149,7 +129,7 @@ export default function Home() {
         />
       </CardContent>
     </Card>
-    <Card sx={{ m:2, maxWidth: 345, textAlign:"center" }}>
+    <Card  sx={cardStyle}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           Data Privacy
