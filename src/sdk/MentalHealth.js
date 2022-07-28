@@ -1,8 +1,129 @@
 export class MentalHealthSDK {
-	constructor(config) {
+    surveys = {
+        "mood":{
+            title:"Mood Score",
+            questions:[
+                {
+                    id:"mood",
+                    text:"How are you feeling today?",
+                    type:"choice",
+                    answers:[
+                        "😔",
+                        "😐",
+                        "😊"
+                    ]
+                },
+            ]
+        },
+        "phq":{
+            title:"PHQ 2",
+            questions:[
+                {
+                    id:"phq_q1",
+                    text:"Over the last 2 weeks, how often have you been bothered by having little interest or please in doing things?",
+                    type:"choice",
+                    answers:[
+                        "Not at all",
+                        "Several days",
+                        "More than half the days",
+                        "Nearly every day",
+                    ]
+                },
+                {
+                    id:"phq_q2",
+                    text:"Over the last 2 weeks, how often have you been bothered by feeling down, depressed, or hopeless?",
+                    type:"choice",
+                    answers:[
+                        "Not at all",
+                        "Several days",
+                        "More than half the days",
+                        "Nearly every day",
+                    ]
+                },
+                {
+                    id:"phq_q3",
+                    text:"Over the last 2 weeks, how often have you been bothered by trouble falling or staying asleep, or sleeping too much?",
+                    type:"choice",
+                    answers:[
+                        "Not at all",
+                        "Several days",
+                        "More than half the days",
+                        "Nearly every day",
+                    ]
+                },
+                {
+                    id:"phq_q4",
+                    text:"Over the last 2 weeks, how often have you been bothered by feeling tired or having little energy?",
+                    type:"choice",
+                    answers:[
+                        "Not at all",
+                        "Several days",
+                        "More than half the days",
+                        "Nearly every day",
+                    ]
+                },
+                {
+                    id:"phq_q5",
+                    text:"Over the last 2 weeks, how often have you been bothered by poor appetite or overeating?",
+                    type:"choice",
+                    answers:[
+                        "Not at all",
+                        "Several days",
+                        "More than half the days",
+                        "Nearly every day",
+                    ]
+                },
+                {
+                    id:"phq_q6",
+                    text:"Over the last 2 weeks, how often have you been bothered by feeling bad about yourself?",
+                    type:"choice",
+                    answers:[
+                        "Not at all",
+                        "Several days",
+                        "More than half the days",
+                        "Nearly every day",
+                    ]
+                },
+                {
+                    id:"phq_q7",
+                    text:"Over the last 2 weeks, how often have you been bothered by trouble concentrating on things?",
+                    type:"choice",
+                    answers:[
+                        "Not at all",
+                        "Several days",
+                        "More than half the days",
+                        "Nearly every day",
+                    ]
+                },
+                {
+                    id:"phq_q8",
+                    text:"Over the last 2 weeks, how often have you been bothered by moving or speaking slowly?",
+                    type:"choice",
+                    answers:[
+                        "Not at all",
+                        "Several days",
+                        "More than half the days",
+                        "Nearly every day",
+                    ]
+                },
+                {
+                    id:"phq_q9",
+                    text:"Over the last 2 weeks, how often have you been bothered by moving or speaking slowly?",
+                    type:"choice",
+                    answers:[
+                        "Not at all",
+                        "Several days",
+                        "More than half the days",
+                        "Nearly every day",
+                    ]
+                },
+            ]
+        }
+    }
+    constructor(config) {
 		this.config = {
             study_id:"default",
-            refresh_timeout:10*60*1000,
+            refresh_timeout:1*60*1000,
             surveys:[],
             suggestions:[
                 {
@@ -38,6 +159,7 @@ export class MentalHealthSDK {
                 level:data.level
             })
         })
+
         navigator.geolocation.getCurrentPosition((data) => {
             console.log(data);
             self._save_data("gps",{
@@ -66,9 +188,19 @@ export class MentalHealthSDK {
         })
         this._save_database()
 	}
-	features(params,update){
-	
-	}
+    clear_database(){
+        this.datasrc = []
+        this._save_database()
+    }
+
+    _compute_features(domain){
+
+    }
+    _compute_feature(feature, domain, data){
+        var baseData = {
+            "raw_data":this.datasrc
+        }
+        return feature(domain)
+    }
 	
 }
-

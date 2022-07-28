@@ -32,6 +32,19 @@ var data = {
   ]
 }
 
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
 export default function Home() {
   return (
     <div>
@@ -46,13 +59,24 @@ export default function Home() {
         <Typography gutterBottom variant="h5" component="div">
           Penguin Mental Health
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          How are you feeling today?
+
+        <Typography gutterBottom variant="p" component="div">
+          Mental Health Stats
         </Typography>
+        <Typography gutterBottom variant="body2" component="div">
+          Happiness
+        </Typography>
+        <LinearProgressWithLabel value={42} />
+        <Typography gutterBottom variant="body2" component="div">
+          Calmness
+        </Typography>
+        <LinearProgressWithLabel value={30} />
+        <Typography gutterBottom variant="body2" component="div">
+          Happiness
+        </Typography>
+        <LinearProgressWithLabel value={60} />
       </CardContent>
-      <LinearProgressWithLabel value={42} />
-      <LinearProgressWithLabel value={30} />
-      <LinearProgressWithLabel value={60} />
+      
       
       <CardActions>
         <Button variant="contained">Your Charts</Button>
@@ -128,11 +152,17 @@ export default function Home() {
     <Card sx={{ m:2, maxWidth: 345, textAlign:"center" }}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-         Show me ze Data
+          Data Privacy
         </Typography>
-        <Typography gutterBottom variant="h5" component="div">{(JSON.stringify(mhsdk.datasrc).length/5000000)*100}%</Typography>
+        <Typography gutterBottom variant="p" component="div">Datapoints collected: {mhsdk.datasrc.length}</Typography>
+        <Typography gutterBottom variant="p" component="div">Memory Utilized: {(JSON.stringify(mhsdk.datasrc).length/1000000).toFixed(2)}mb</Typography>
         
-        <Typography gutterBottom variant="h5" component="div">{JSON.stringify(mhsdk.datasrc,null,2)}</Typography>
+        <Typography gutterBottom variant="p" component="div">We care about your data privacy. You can view and manage your local data storage at any time.</Typography>
+        <br />
+        <Button variant="contained" onClick={()=>{download("mha.json",JSON.stringify(mhsdk.datasrc))}}>Export My Data</Button>
+        <br />
+        <br />
+        <Button variant="contained">Reset My Data</Button>
         
       </CardContent>
     </Card>
