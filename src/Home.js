@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -52,7 +53,6 @@ const cardStyle = {
   width:"87%",
   maxWidth: "500px",
   color: "#fff",
-  color: "rgba(255,255,255,0.8)",
   textShadow:"1px 1px #ccc",
   backgroundColor:"#ffffff55",
   backdropFilter: "blur(50px)",
@@ -60,8 +60,11 @@ const cardStyle = {
   boxShadow: "0 0 80px rgba(0, 0, 0, 0.2)",
   borderRadius:"2vmin"
 }
+const updateTimeMs = 60*1000;
 
 export default function Home() {
+  const [lastRendered, setLastRendered] = useState(0);
+  setInterval(()=>{setLastRendered((new Date).getTime())},updateTimeMs)
   return (
     <div>
       <Card sx={cardStyle}>
