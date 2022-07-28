@@ -49,7 +49,8 @@ const mW = 400;
 const cardStyle = { 
   m:2, 
   p:1,
-  maxWidth: mW,
+  width:"87%",
+  maxWidth: "500px",
   color: "#fff",
   color: "rgba(255,255,255,0.8)",
   textShadow:"1px 1px #ccc",
