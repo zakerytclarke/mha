@@ -10,7 +10,7 @@ import { red } from '@mui/material/colors';
 
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Chart }            from 'react-chartjs-2'
-import { Line } from 'react-chartjs-2';
+import { Scatter } from 'react-chartjs-2';
 
 
 import { LinearProgressWithLabel } from "./components/LinearProgressWithLabel.js"
@@ -21,17 +21,7 @@ import { MentalHealthSDK } from "./sdk/MentalHealth.js"
 
 const mhsdk = new MentalHealthSDK()
 
-var data = {
-  labels:["1","2","3"],
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: [1,2,3],
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    }
-  ]
-}
+
 
 function download(filename, text) {
   var element = document.createElement('a');
@@ -62,9 +52,42 @@ const cardStyle = {
 }
 const updateTimeMs = 60*1000;
 
+//TODO REMOVE
+
+//Map GPS on cartesian: mhsdk.datasrc.filter(x=>x.type=="gps").map(dp=>({x:dp.data.latitude,y:dp.data.longitude}))
+
+console.log(mhsdk.datasrc);
+var data = {
+  datasets: [
+    {
+      label: 'GPS Coverage',
+      data: mhsdk.datasrc.filter(x=>x.type=="gps").map(dp=>({x:dp.ts,y:0})),
+      backgroundColor: 'rgba(255, 99, 132, 1)',
+    },
+    {
+      label: 'Battery Coverage',
+      data: mhsdk.datasrc.filter(x=>x.type=="battery").map(dp=>({x:dp.ts,y:1})),
+      backgroundColor: 'rgba(255, 99, 132, 1)',
+    },
+    {
+      label: 'Gyroscope Coverage',
+      data: mhsdk.datasrc.filter(x=>x.type=="gyroscope").map(dp=>({x:dp.ts,y:2})),
+      backgroundColor: 'rgba(255, 99, 132, 1)',
+    },
+  ],
+};
+
+
+
+
+//REMOVE
+
+
 export default function Home() {
   const [lastRendered, setLastRendered] = useState(0);
   setInterval(()=>{setLastRendered((new Date).getTime())},updateTimeMs)
+
+
   return (
     <div>
       <Card sx={cardStyle}>
@@ -133,7 +156,7 @@ export default function Home() {
         <Typography gutterBottom variant="h5" component="div">
           Sleep Schedule Name Mental Health
         </Typography>
-        <Line data={data}
+        <Scatter data={data}
         />
       </CardContent>
     </Card>
