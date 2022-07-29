@@ -54,8 +54,6 @@ const updateTimeMs = 60*1000;
 
 //TODO REMOVE
 
-//Map GPS on cartesian: mhsdk.datasrc.filter(x=>x.type=="gps").map(dp=>({x:dp.data.latitude,y:dp.data.longitude}))
-
 console.log(mhsdk.datasrc);
 var data = {
   datasets: [
@@ -77,7 +75,64 @@ var data = {
   ],
 };
 
+var start = new Date();
+start.setUTCHours(0,0,0,0);
 
+var end = new Date();
+end.setUTCHours(23,59,59,999);
+
+var todaysdatasrc = mhsdk.datasrc.filter(x=>x.ts>start.getTime()&&x.ts<end.getTime())
+
+var todaysdata = {
+  datasets: [
+    {
+      label: 'GPS Coverage',
+      data: todaysdatasrc.filter(x=>x.type=="gps").map(dp=>({x:dp.ts,y:0})).concat([{x:start.getTime(),y:0},{x:end.getTime(),y:0}]),
+      backgroundColor: 'rgba(255, 99, 132, 1)',
+    },
+    {
+      label: 'Battery Coverage',
+      data: todaysdatasrc.filter(x=>x.type=="battery").map(dp=>({x:dp.ts,y:1})),
+      backgroundColor: 'rgba(255, 99, 132, 1)',
+    },
+    {
+      label: 'Gyroscope Coverage',
+      data: todaysdatasrc.filter(x=>x.type=="gyroscope").map(dp=>({x:dp.ts,y:2})),
+      backgroundColor: 'rgba(255, 99, 132, 1)',
+    },
+  ],
+};
+
+var daysdata = {
+  datasets: [
+    {
+      label: 'GPS Coverage',
+      data: todaysdatasrc.filter(x=>x.type=="gps").map(dp=>({x:dp.ts,y:0})),
+      backgroundColor: 'rgba(255, 99, 132, 1)',
+    },
+    {
+      label: 'Battery Coverage',
+      data: todaysdatasrc.filter(x=>x.type=="battery").map(dp=>({x:dp.ts,y:1})),
+      backgroundColor: 'rgba(255, 99, 132, 1)',
+    },
+    {
+      label: 'Gyroscope Coverage',
+      data: todaysdatasrc.filter(x=>x.type=="gyroscope").map(dp=>({x:dp.ts,y:2})),
+      backgroundColor: 'rgba(255, 99, 132, 1)',
+    },
+  ],
+};
+
+var datagps = {
+  datasets: [
+    {
+      label: 'GPS Location',
+      data: mhsdk.datasrc.filter(x=>x.type=="gps").map(dp=>({x:dp.data.latitude,y:dp.data.longitude}))
+      ,
+    },
+    
+  ],
+};
 
 
 //REMOVE
@@ -158,8 +213,18 @@ export default function Home() {
         </Typography>
         <Scatter data={data}
         />
+      <Scatter data={todaysdata}
+        />
+        <Scatter data={daysdata}
+        />
+        <Scatter data={datagps}
+        />
       </CardContent>
     </Card>
+
+
+
+    
     <Card  sx={cardStyle}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
