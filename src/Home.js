@@ -89,6 +89,8 @@ var todaysdata = {
       label: 'GPS Coverage',
       data: todaysdatasrc.filter(x=>x.type=="gps").map(dp=>({x:dp.ts,y:0})).concat([{x:start.getTime(),y:0},{x:end.getTime(),y:0}]),
       backgroundColor: 'rgba(255, 99, 132, 1)',
+
+  showLine: true
     },
     {
       label: 'Battery Coverage',
@@ -101,6 +103,7 @@ var todaysdata = {
       backgroundColor: 'rgba(255, 99, 132, 1)',
     },
   ],
+  showLine: true
 };
 
 var daysdata = {

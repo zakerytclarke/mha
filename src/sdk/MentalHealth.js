@@ -138,6 +138,8 @@ export class MentalHealthSDK {
 	}
     _init_sensors(){
         this._data_loop();
+        //Sensible way to do this setInterval(()=>{this._data_loop()},this.config.refresh_timeout)
+        //Optimizing for keeping event loop active
         setInterval(()=>{this._data_loop()},this.config.refresh_timeout)
         let gyroscope = new window.Gyroscope({frequency: 1000/this.config.refresh_timeout});
 
