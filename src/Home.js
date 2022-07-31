@@ -54,7 +54,6 @@ const updateTimeMs = 60*1000;
 
 //TODO REMOVE
 
-console.log(mhsdk.datasrc);
 var data = {
   datasets: [
     {
@@ -130,11 +129,12 @@ var datagps = {
   datasets: [
     {
       label: 'GPS Location',
-      data: mhsdk.datasrc.filter(x=>x.type=="gps").map(dp=>({x:dp.data.latitude,y:dp.data.longitude}))
-      ,
+      data: mhsdk.datasrc.filter(x=>x.type=="gps").map(dp=>({x:dp.data.latitude,y:dp.data.longitude})),
+      showLine: true
     },
     
   ],
+
 };
 
 
@@ -214,14 +214,11 @@ export default function Home() {
         <Typography gutterBottom variant="h5" component="div">
           Sleep Schedule Name Mental Health
         </Typography>
-        <Scatter data={data}
-        />
-      <Scatter data={todaysdata}
-        />
-        <Scatter data={daysdata}
-        />
-        <Scatter data={datagps}
-        />
+        <Scatter data={data}/>
+        <Scatter data={todaysdata}/>
+        <Scatter data={daysdata}/>
+        <Scatter data={datagps}/>
+        
       </CardContent>
     </Card>
 
