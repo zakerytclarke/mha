@@ -143,6 +143,16 @@ export default function Home() {
         showLine: true
       },
       {
+        label: 'Home Location',
+        data: (mhsdk.computed_features.home_location||[]).map(dp=>({x:dp.latitude,y:dp.longitude,r:dp.time_at_location/1000/60/60})),
+        backgroundColor: "green", 
+      },
+      {
+        label: 'Work Location',
+        data: (mhsdk.computed_features.work_location||[]).map(dp=>({x:dp.latitude,y:dp.longitude,r:dp.time_at_location/1000/60/60})),
+        backgroundColor: "yellow", 
+      },
+      {
         type:'scatter',
         label: 'GPS Cluster Path',
         data: (mhsdk.computed_features.poi_gps_cluster||[]).map(dp=>({x:dp.latitude,y:dp.longitude})),
@@ -157,16 +167,7 @@ export default function Home() {
         backgroundColor: "blue",
         fillColor: "blue",
       },
-      {
-        label: 'Home Location',
-        data: (mhsdk.computed_features.home_location||[]).map(dp=>({x:dp.latitude,y:dp.longitude,r:dp.time_at_location/1000/60/60})),
-        backgroundColor: "green", 
-      },
-      {
-        label: 'Work Location',
-        data: (mhsdk.computed_features.work_location||[]).map(dp=>({x:dp.latitude,y:dp.longitude,r:dp.time_at_location/1000/60/60})),
-        backgroundColor: "yellow", 
-      },
+
       
     ],
     options:{

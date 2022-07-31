@@ -114,7 +114,7 @@ export function time_at_gps_cluster(domain,data){
       clusters[i].max_time_at_location=(clusters[i+1]||clusters[i]).ts_start-clusters[i].ts_start;
       clusters[i].time_at_location=clusters[i].max_time_at_location;
    }
-   return clusters;
+   return clusters.sort((b,a)=>a.time_at_location-b.time_at_location);
 }
 
 export function type_gps_cluster(domain,data){
@@ -137,10 +137,12 @@ export function poi_gps_cluster(domain,data){
 
 export function home_location(domain,data){
    var poi = poi_gps_cluster(domain,data);
-   return [poi.sort((b,a)=>a.time_at_location-b.time_at_location)[0]]
+   return [poi[0]]
 }
 
 export function work_location(domain,data){
+   var home = home_location(domain,data)[0];
    var poi = poi_gps_cluster(domain,data);
-   return [poi.sort((b,a)=>a.time_at_location-b.time_at_location)[1]]
+   //Second most visited location not near home
+   return [poi.filter(x=>distance(home,x)>CLUSTER_SETTINGS.max_distance)[0]]
 }
