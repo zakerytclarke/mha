@@ -10,7 +10,7 @@ import { red } from '@mui/material/colors';
 
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Chart }            from 'react-chartjs-2'
-import { Scatter } from 'react-chartjs-2';
+import { Scatter, Bubble } from 'react-chartjs-2';
 
 
 import { LinearProgressWithLabel } from "./components/LinearProgressWithLabel.js"
@@ -50,7 +50,7 @@ const cardStyle = {
   boxShadow: "0 0 80px rgba(0, 0, 0, 0.2)",
   borderRadius:"2vmin"
 }
-const updateTimeMs = 60*1000;
+const updateTimeMs = 30*1000;
 
 //TODO REMOVE
 
@@ -125,17 +125,7 @@ var daysdata = {
   ],
 };
 
-var datagps = {
-  datasets: [
-    {
-      label: 'GPS Location',
-      data: mhsdk.datasrc.filter(x=>x.type=="gps").map(dp=>({x:dp.data.latitude,y:dp.data.longitude})),
-      showLine: true
-    },
-    
-  ],
 
-};
 
 
 //REMOVE
@@ -144,7 +134,47 @@ var datagps = {
 export default function Home() {
   const [lastRendered, setLastRendered] = useState(0);
   setInterval(()=>{setLastRendered((new Date).getTime())},updateTimeMs)
-
+  var datagps = {
+    datasets: [
+      {
+        type:'scatter',
+        label: 'GPS Location',
+        data: (mhsdk.computed_features.gps_data||[]).map(dp=>({x:dp.latitude,y:dp.longitude})),
+        showLine: true
+      },
+      {
+        type:'scatter',
+        label: 'GPS Cluster Path',
+        data: (mhsdk.computed_features.poi_gps_cluster||[]).map(dp=>({x:dp.latitude,y:dp.longitude})),
+        showLine: true,
+        backgroundColor: "blue",
+        borderColor: "blue",
+      },
+      {
+        label: 'GPS Clusters',
+        data: (mhsdk.computed_features.poi_gps_cluster||[]).map(dp=>({x:dp.latitude,y:dp.longitude,r:dp.time_at_location/1000/60/60})),
+        showLine: true,
+        backgroundColor: "blue",
+        fillColor: "blue",
+      },
+      {
+        label: 'Home Location',
+        data: (mhsdk.computed_features.home_location||[]).map(dp=>({x:dp.latitude,y:dp.longitude,r:dp.time_at_location/1000/60/60})),
+        backgroundColor: "green", 
+      },
+      {
+        label: 'Work Location',
+        data: (mhsdk.computed_features.work_location||[]).map(dp=>({x:dp.latitude,y:dp.longitude,r:dp.time_at_location/1000/60/60})),
+        backgroundColor: "yellow", 
+      },
+      
+    ],
+    options:{
+      responsive:false,
+      aspectRatio:1,
+    }
+  
+  };
 
   return (
     <div>
@@ -217,11 +247,16 @@ export default function Home() {
         <Scatter data={data}/>
         <Scatter data={todaysdata}/>
         <Scatter data={daysdata}/>
-        <Scatter data={datagps}/>
         
       </CardContent>
     </Card>
 
+    <Card sx={cardStyle}>
+      <CardContent>
+      <Bubble data={datagps} height={300}/>
+      </CardContent>
+    </Card>
+    
 
 
     

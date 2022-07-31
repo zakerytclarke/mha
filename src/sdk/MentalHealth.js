@@ -1,3 +1,5 @@
+import * as Features from "./Features.js"
+
 export class MentalHealthSDK {
     surveys = {
         "mood":{
@@ -133,8 +135,11 @@ export class MentalHealthSDK {
             ]
         };
 		this.datasrc = [];
+
+		this.computed_features = {};
         this._load_database()
 		this._init_sensors()
+        this.compute_features();
 	}
     _init_sensors(){
         this._data_loop();
@@ -163,7 +168,6 @@ export class MentalHealthSDK {
         })
 
         navigator.geolocation.getCurrentPosition((data) => {
-            console.log(data);
             self._save_data("gps",{
                 "latitude":data.coords.latitude,
                 "longitude":data.coords.longitude,
@@ -182,7 +186,6 @@ export class MentalHealthSDK {
     }
 
     _save_data(label, data){
-        console.log(data);
         this.datasrc.push({
             'type':label,
             'ts':(new Date()).getTime(),
@@ -194,15 +197,19 @@ export class MentalHealthSDK {
         this.datasrc = []
         this._save_database()
     }
-
-    _compute_features(domain){
-
+    compute_features(){
+        var domain = {ts_start:0,ts_end:(new Date()).getTime()};
+        var features_to_compute = [Features.gps_data,Features.poi_gps_cluster,Features.home_location,Features.work_location];
+        var features = {};
+        features_to_compute.map((fs)=>{
+            features[fs.name]=this.compute_feature(fs,domain);
+        });
+        this.computed_features=features;
+        console.log(features);
     }
-    _compute_feature(feature, domain, data){
-        var baseData = {
-            "raw_data":this.datasrc
-        }
-        return feature(domain)
+    compute_feature(feature, domain){
+        var domain = {ts_start:0,ts_end:(new Date()).getTime()};
+        return feature(domain,this.datasrc);
     }
 	
 }
