@@ -197,8 +197,10 @@ export class MentalHealthSDK {
         this.datasrc = []
         this._save_database()
     }
-    compute_features(){
-        var domain = {ts_start:0,ts_end:(new Date()).getTime()};
+    compute_features(domain){
+        if(!domain){
+            domain = {ts_start:0,ts_end:(new Date()).getTime()}; 
+        } 
         var features_to_compute = [Features.gps_data,Features.poi_gps_cluster,Features.home_location,Features.work_location];
         var features = {};
         features_to_compute.map((fs)=>{
@@ -208,7 +210,7 @@ export class MentalHealthSDK {
         console.log(features);
     }
     compute_feature(feature, domain){
-        var domain = {ts_start:0,ts_end:(new Date()).getTime()};
+        
         return feature(domain,this.datasrc);
     }
 	

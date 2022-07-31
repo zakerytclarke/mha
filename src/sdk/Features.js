@@ -73,7 +73,7 @@ function distance(c1,c2){
 
 const CLUSTER_SETTINGS = {
    max_distance:100,
-   min_time:10*60*1000,//10 minutes
+   min_time:15*60*1000,//15 minutes
 }
 //If previous and next point are withing a given distance of the current cluster, we classify as the mean of all current points
 export function gps_clusters(domain,data){
