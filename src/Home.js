@@ -14,6 +14,7 @@ import { Scatter, Bubble } from 'react-chartjs-2';
 
 
 import { LinearProgressWithLabel } from "./components/LinearProgressWithLabel.js"
+import { LinearProgress } from '@mui/material';
 import logo from "./assets/penguin_waving.gif"
 import './Home.css';
 
@@ -21,7 +22,24 @@ import { MentalHealthSDK } from "./sdk/MentalHealth.js"
 
 const mhsdk = new MentalHealthSDK()
 
-
+const colorPalette = {            
+  backgroundColor: [
+    'rgba(255, 99, 132, 0.2)',
+    'rgba(54, 162, 235, 0.2)',
+    'rgba(255, 206, 86, 0.2)',
+    'rgba(75, 192, 192, 0.2)',
+    'rgba(153, 102, 255, 0.2)',
+    'rgba(255, 159, 64, 0.2)'
+  ],
+  borderColor: [
+    'rgba(255, 99, 132, 1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(75, 192, 192, 1)',
+    'rgba(153, 102, 255, 1)',
+    'rgba(255, 159, 64, 1)'
+  ]
+}
 
 function download(filename, text) {
   var element = document.createElement('a');
@@ -133,7 +151,8 @@ var daysdata = {
 
 export default function Home() {
   const [lastRendered, setLastRendered] = useState(0);
-  setInterval(()=>{setLastRendered((new Date).getTime())},updateTimeMs)
+  // setInterval(()=>{setLastRendered((new Date).getTime())},updateTimeMs)
+  mhsdk.register_callback(setLastRendered)
   var datagps = {
     datasets: [
       {
@@ -144,28 +163,31 @@ export default function Home() {
       },
       {
         label: 'Home Location',
-        data: (mhsdk.computed_features.home_location||[]).map(dp=>({x:dp.latitude,y:dp.longitude,r:dp.time_at_location/1000/60/60})),
-        backgroundColor: "green", 
+        data: (mhsdk.computed_features.home_location||[]).map(dp=>({x:dp.latitude,y:dp.longitude,r:Math.min(24,dp.time_at_location/1000/60/60)})),
+        borderColor: colorPalette.borderColor[5],
+        backgroundColor: colorPalette.backgroundColor[5], 
       },
       {
         label: 'Work Location',
-        data: (mhsdk.computed_features.work_location||[]).map(dp=>({x:dp.latitude,y:dp.longitude,r:dp.time_at_location/1000/60/60})),
-        backgroundColor: "yellow", 
+        data: (mhsdk.computed_features.work_location||[]).map(dp=>({x:dp.latitude,y:dp.longitude,r:Math.min(24,dp.time_at_location/1000/60/60)})),
+        borderColor: colorPalette.borderColor[2],
+        backgroundColor: colorPalette.backgroundColor[2], 
       },
       {
         type:'scatter',
         label: 'GPS Cluster Path',
         data: (mhsdk.computed_features.poi_gps_cluster||[]).map(dp=>({x:dp.latitude,y:dp.longitude})),
         showLine: true,
-        backgroundColor: "blue",
-        borderColor: "blue",
+        borderColor: colorPalette.borderColor[1],
+        backgroundColor: colorPalette.backgroundColor[1], 
       },
       {
         label: 'GPS Clusters',
-        data: (mhsdk.computed_features.poi_gps_cluster||[]).map(dp=>({x:dp.latitude,y:dp.longitude,r:dp.time_at_location/1000/60/60})),
+        data: (mhsdk.computed_features.poi_gps_cluster||[]).map(dp=>({x:dp.latitude,y:dp.longitude,r:Math.min(24,dp.time_at_location/1000/60/60)})),
         showLine: true,
-        backgroundColor: "blue",
-        fillColor: "blue",
+        borderColor: colorPalette.borderColor[1],
+        backgroundColor: colorPalette.backgroundColor[1], 
+        fillColor: colorPalette.backgroundColor[1], 
       },
 
       
@@ -181,7 +203,7 @@ export default function Home() {
     <div>
       <Card sx={cardStyle}>
       <Typography gutterBottom variant="h4" component="div">
-          Penguin Mental Health
+          Igloo Mental Health
       </Typography>
       <CardMedia
         component="img"
@@ -196,36 +218,66 @@ export default function Home() {
           Mental Health Stats
         </Typography>
         <Typography gutterBottom variant="body2" component="div">
-          Happiness
+          Happiness (Depression)
         </Typography>
-        <LinearProgressWithLabel value={42} />
+        <LinearProgressWithLabel value={mhsdk.computed_features.depression_score[0].score*100} style={{height:15}}/>
         <Typography gutterBottom variant="body2" component="div">
-          Calmness
+          Calmness (Anxiety)
         </Typography>
-        <LinearProgressWithLabel value={30} />
+        <LinearProgressWithLabel value={30} style={{height:15}}/>
         <Typography gutterBottom variant="body2" component="div">
-          Happiness
+          Control (Mania)
         </Typography>
-        <LinearProgressWithLabel value={60} />
+        <LinearProgressWithLabel value={60} style={{height:15}}/>
+        <Typography gutterBottom variant="body2" component="div">
+          Coverage
+        </Typography>
+        <LinearProgress variant="determinate" value={30} style={{height:15,width:100/8+"%",display:"inline-block",border:"1px black solid"}}/>
+        <LinearProgress variant="determinate" value={30} style={{height:15,width:100/8+"%",display:"inline-block",border:"1px black solid"}}/>
+        <LinearProgress variant="determinate" value={30} style={{height:15,width:100/8+"%",display:"inline-block",border:"1px black solid"}}/>
+        <LinearProgress variant="determinate" value={30} style={{height:15,width:100/8+"%",display:"inline-block",border:"1px black solid"}}/>
+        <LinearProgress variant="determinate" value={30} style={{height:15,width:100/8+"%",display:"inline-block",border:"1px black solid"}}/>
+        <LinearProgress variant="determinate" value={30} style={{height:15,width:100/8+"%",display:"inline-block",border:"1px black solid"}}/>
+        <LinearProgress variant="determinate" value={30} style={{height:15,width:100/8+"%",display:"inline-block",border:"1px black solid"}}/>
+        
       </CardContent>
-      
+{/*       
       
       <CardActions>
         <Button variant="contained">Your Charts</Button>
         <Button variant="contained">Your Data</Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
-    <Card sx={cardStyle}>
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Survey Name Mental Health
-        </Typography>
-      </CardContent>
 
-      <CardActions>
-        <Button variant="contained">😔</Button><Button variant="contained">😐</Button><Button variant="contained">😊</Button>
-      </CardActions>
-    </Card>
+    {
+      mhsdk.computed_features.surveys_to_display.map(function(x){
+        return (
+          <Card sx={cardStyle}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {x.text}
+            </Typography>
+          </CardContent>
+    
+          <CardActions>
+            {
+              x.answers.map(function(y){
+                return (<Button variant="contained" onClick={function(){
+                  console.log(x);
+                  x.answer = y;
+                  mhsdk._save_data("survey",x)
+                //Update any features that might exist
+                mhsdk.compute_features();
+                }}>{y}</Button>);
+              })
+            }
+          </CardActions>
+        </Card>
+        )
+      })
+    }
+
+
     
     <Card  sx={cardStyle}>
       <CardContent>
