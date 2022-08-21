@@ -220,7 +220,7 @@ export default function Home() {
         <Typography gutterBottom variant="body2" component="div">
           Happiness (Depression)
         </Typography>
-        <LinearProgressWithLabel value={mhsdk.computed_features.depression_score[0].score*100} style={{height:15}}/>
+        <LinearProgressWithLabel value={(mhsdk.computed_features.depression_score||[{score:0}])[0].score*100} style={{height:15}}/>
         <Typography gutterBottom variant="body2" component="div">
           Calmness (Anxiety)
         </Typography>
