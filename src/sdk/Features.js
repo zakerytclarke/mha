@@ -1,8 +1,29 @@
+var FeatureGroups={};
 /**
  * Helper Functions
  * 
  */
+// function feature_group(dependencies,ft){
+//    return function([dependencies],[domain]){
+//       var dep_results = dependencies.map(x=>x.)
+//       return ft(dep_results) 
+//    }
+// }
 
+
+// function ft_raw_data([domain],[]){
+//    return data.filter(x => (domain.ts_start||0)<x.ts && x.ts<(domain.ts_end||Math.Infinity))
+// }
+
+// @feature_group([ft_raw_data])
+// function ft_battery_data([domain],[data]){
+//    return raw_data(domain,data).filter(x=>x.type=="battery");
+// }
+
+// @feature_group([ft_battery_data])
+// function ft_avg_battery_data([domain],[data]){
+//    return raw_data(domain,data).filter(x=>x.type=="battery");
+// }
 
 function memoize(fg,domain){
    var cache = {};
@@ -104,7 +125,9 @@ const CLUSTER_SETTINGS = {
 export function gps_clusters(domain,data){
    var clusters = [];
    var gps_coords = gps_data(domain,data);
-   
+   if(gps_coords.length==0){
+      return [];
+   }
    var current_cluster = gps_coords[0];
    current_cluster.points = [gps_coords[0]];
    current_cluster.ts_start = gps_coords[0].ts;
