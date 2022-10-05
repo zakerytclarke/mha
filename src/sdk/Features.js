@@ -468,7 +468,7 @@ export function sucidality_suggestion(domain,data){
    if(last_phq.score>20){
       return [{
          ts:domain.ts_end,
-         suggestion:"If you are thinking about harming yourself or attempting suicide, tell someone who can help right away.\n         "
+         suggestion:"If you are thinking about harming yourself or attempting suicide, tell someone who can help right away.\n"
       }]
    }
 
@@ -476,5 +476,5 @@ export function sucidality_suggestion(domain,data){
 
 
 export function suggestions_to_display(domain,data){
-
+   
 }
