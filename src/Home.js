@@ -203,7 +203,7 @@ export default function Home() {
     <div>
       <Card sx={cardStyle}>
       <Typography gutterBottom variant="h4" component="div">
-          Igloo Mental Health
+         Mental Health
       </Typography>
       <CardMedia
         component="img"
@@ -250,7 +250,7 @@ export default function Home() {
     </Card>
 
     {
-      mhsdk.computed_features.surveys_to_display.map(function(x){
+      (mhsdk.computed_features.surveys_to_display||[]).map(function(x){
         return (
           <Card sx={cardStyle}>
           <CardContent>
