@@ -6,9 +6,9 @@ MHA protects you by ensuring all personal data and calculations are performed on
 ## Download
 MHA is an open source web app, which can be install at https://zclarke.dev/mha
 
-<img src="screenshot_home.png" style="display:inline-block;width:20%;">
-<img src="screenshot_survey.png" style="display:inline-block;width:20%;">
-<img src="screenshot_gps.png" style="display:inline-block;width:20%;">
+<img src="screenshot_home.png" />
+<img src="screenshot_survey.png" />
+<img src="screenshot_gps.png" />
 
 ## Interested in using MHA for a research or clinical study?
 MHA can be used in a variety of research and clinical settings in order to assess patient mental health, and compute statistics around patient populations. 
