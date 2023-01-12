@@ -18,11 +18,21 @@ MHA focuses on privacy and data efficiency by running all computations on device
 
 
 ```mermaid
-graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
+graph TB;
+    SharedLibrary-->FeatureDriver;
+    SharedLibrary-->Backend;
+    subgraph ClientPWA;
+    EventLogger-->|Capture GPS,Gyro,etc events|LocalStorage;
+    LocalStorage-->|Compute features, models, srs, etc|FeatureDriver;
+    FeatureDriver-->|Display visuals to user|Device;
+    end;
+    subgraph Backend;
+    FeatureDriver-->|Store Anaonymized Features|DataLake;
+    end;
+    subgraph SharedLibrary;
+    FeatureGroups;
+    Models;
+    end;
 ``` 
 
 ### Sensors
