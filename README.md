@@ -16,22 +16,13 @@ MHA can be used in a variety of research and clinical settings in order to asses
 ## Architecture
 MHA focuses on privacy and data efficiency by running all computations on device. There are shared feature groups that can be used to compute features on both the frontend and backend using NodeJS. Only anonymized high level features- ie sleep are uploaded from the device to the backend. All business logic and calculations around app behavior are controlled through feature groups.
 
+
 ```mermaid
-graph TB
-    SharedLibrary-->FeatureDriver
-    SharedLibrary-->Backend
-    subgraph ClientPWA
-    EventLogger-->|Capture GPS,Gyro,etc events|LocalStorage
-    LocalStorage-->|Compute features, models, srs, etc|FeatureDriver
-    FeatureDriver-->|Display visuals to user|Device
-    end
-    subgraph Backend
-    FeatureDriver-->|Store Anaonymized Features|DataLake
-    end
-    subgraph SharedLibrary
-    FeatureGroups
-    Models
-    end
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
 ``` 
 
 ### Sensors
