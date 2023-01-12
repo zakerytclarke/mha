@@ -22,16 +22,16 @@ graph TB;
     SharedLibrary-->FeatureDriver;
     SharedLibrary-->Backend;
     subgraph ClientPWA;
-    EventLogger-->|Capture GPS,Gyro,etc events|LocalStorage;
-    LocalStorage-->|Compute features, models, srs, etc|FeatureDriver;
-    FeatureDriver-->|Display visuals to user|Device;
+        EventLogger-->|Capture GPS,Gyro,etc events|LocalStorage;
+        LocalStorage-->|Compute features, models, srs, etc|FeatureDriver;
+        FeatureDriver-->|Display visuals to user|Device;
     end;
     subgraph Backend;
-    FeatureDriver-->|Store Anaonymized Features|DataLake;
+        FeatureDriver-->|Store Anaonymized Features|DataLake;
     end;
     subgraph SharedLibrary;
-    FeatureGroups;
-    Models;
+        FeatureGroups;
+        Models;
     end;
 ``` 
 
